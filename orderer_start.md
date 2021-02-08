@@ -1,6 +1,6 @@
 # 排序节点Orderer的启动流程源码分析
 
-排序节点Orderer的启动入口在orderer/common/server/main.go中的func Main()
+排序节点Orderer的启动入口在`orderer/common/server/main.go`中的`func Main()`
 
 话不多说，直接进入代码分析启动流程
 
