@@ -46,7 +46,8 @@ func Main() {
 	logObserver := floggingmetrics.NewObserver(metricsProvider)
 	flogging.SetObserver(logObserver)
 
-	// 利用前面生成的配置初始化grpc server的ServerConfig和GRPCServer。这当中会利用SecureOptions、KeepaliveOptions来保存TLS的公私钥，C/S两端的证书以及呼应时间、等待时间等。
+	// 利用前面生成的配置初始化grpc server的ServerConfig和GRPCServer。这当中会利用SecureOptions、KeepaliveOptions来保存TLS的公私钥，
+	// C/S两端的证书以及呼应时间、等待时间等。
 	serverConfig := initializeServerConfig(conf, metricsProvider)
 	grpcServer := initializeGrpcServer(conf, serverConfig)
 	// 初始化caManager。其中clientRootCAs是一组PEM编码的X509证书颁发机构即CA，用于服务器验证客户端的证书
@@ -149,7 +150,10 @@ func Main() {
 			// a recent config block (number i.e. >0) can replicate. This will
 			// replicate all channels if the clusterBootBlock number > system-channel
 			// height (i.e. there is a gap in the ledger).
-			// 执行复制：当用区块号大于0的clusterBootBlock引导时，将执行复制，此时当前节点的状态落后于其他节点。只有配置了一个最近配置区块(区块号大于0)的集群才能执行复制。如果clusterBootBlock区块号大于系统通道区块高度(即在账本中有gap)，则将复制所有通道。此处的复制指的是从其他节点拉取所有通道到当前节点。
+			// 执行复制：当用区块号大于0的clusterBootBlock引导时，将执行复制，此时当前节点的状态落后于其他节点。
+			// 只有配置了一个最近配置区块(区块号大于0)的集群才能执行复制。
+			// 如果clusterBootBlock区块号大于系统通道区块高度(即在账本中有gap)，则将复制所有通道。
+			// 此处的复制指的是从其他节点拉取所有通道到当前节点。
 			repInitiator = onboarding.NewReplicationInitiator(lf, clusterBootBlock, conf, clusterClientConfig.SecOpts, signer, cryptoProvider)
 			repInitiator.ReplicateIfNeeded(clusterBootBlock)
 			// With BootstrapMethod == "none", the bootstrapBlock comes from a
